@@ -1,0 +1,30 @@
+# values.yaml
+
+image:
+  repository: postgres
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+postgresql:
+  username: postgres
+  password: mypassword
+  database: mydatabase
+
+service:
+  type: NodePort
+  port: 5432
+  nodePort: 32000  # Specify the NodePort number here, or leave it to let Kubernetes assign a port
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce  # Note this is now correctly a list
+  size: 8Gi

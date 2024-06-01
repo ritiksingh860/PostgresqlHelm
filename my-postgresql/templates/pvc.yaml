@@ -1,0 +1,19 @@
+# templates/pvc.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "my-postgresql.fullname" . }}-pvc
+  labels:
+    app: {{ include "my-postgresql.name" . }}
+    chart: {{ include "my-postgresql.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  accessModes:
+    {{- range .Values.persistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
